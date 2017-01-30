@@ -349,16 +349,16 @@ int main(int argc, char *const *argv)
         exit(1);
     }
 
-    if (s2n_connection_set_blinding(conn, S2N_SELF_SERVICE_BLINDING) < 0) {
-        fprintf(stderr, "Error disabling blinding: '%s'\n", s2n_strerror(s2n_errno, "EN"));
-        exit(1);
-    }
-
     int fd;
     while ((fd = accept(sockfd, ai->ai_addr, &ai->ai_addrlen)) > 0) {
         printf("Connection accepted (socketfd %d)\n", fd);
         if (s2n_connection_set_fd(conn, fd) < 0) {
             fprintf(stderr, "Error setting file descriptor: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+            exit(1);
+        }
+
+        if (s2n_connection_set_blinding(conn, S2N_SELF_SERVICE_BLINDING) < 0) {
+            fprintf(stderr, "Error disabling blinding: '%s'\n", s2n_strerror(s2n_errno, "EN"));
             exit(1);
         }
 
