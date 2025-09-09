@@ -670,7 +670,7 @@ int main(int argc, char *const *argv)
             int rc = handle_connection(fd, config, conn_settings);
             close(fd);
             if (rc < 0) {
-                exit(rc);
+                // exit(rc);
             }
 
             /* If max_conns was set, then exit after it is reached. Otherwise
